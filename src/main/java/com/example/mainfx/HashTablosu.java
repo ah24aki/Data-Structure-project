@@ -5,6 +5,7 @@ public class HashTablosu {
     private final int KAPASITE = 50;
 
     public HashTablosu() {
+
         tablo = new PlakaDugum[KAPASITE];
     }
 

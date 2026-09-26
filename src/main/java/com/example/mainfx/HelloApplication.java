@@ -24,7 +24,7 @@ import java.util.*;
 
 public class HelloApplication extends Application {
 
-    // --- Veri Yapıları ---
+
     Kuyruk yol1 = new Kuyruk();
     Kuyruk yol2 = new Kuyruk();
     HashTablosu plakaKayitlari = new HashTablosu();
@@ -39,11 +39,10 @@ public class HelloApplication extends Application {
     Arac[] tumAraclar = new Arac[200];
     int toplamAracSayisi = 0;
 
-    // --- Görsel Resim Varlıkları ---
     private Image imgCar, imgTruck, imgFerry, imgRihtim, imgOkyanus;
     private boolean assetsLoaded = false;
 
-    // --- Görsel UI Elemanları ---
+
     TextArea txtSistemLog = new TextArea();
     Label lblDurum = new Label("⚓ Sistem Hazır. Bekleniyor...");
     Label lblFeribotBilgi = new Label("🚢 Sıradaki Feribot: Bekleniyor...");
@@ -53,7 +52,7 @@ public class HelloApplication extends Application {
     Label lblAltOran = new Label("%0");
     Label lblUstOran = new Label("%0");
 
-    // Oyun Alanı ve Konteynerler
+
     Pane oyunAlani = new Pane();
     Pane gemiKonteyner = new Pane();
     Pane animasyonPaneli = new Pane();
@@ -79,9 +78,7 @@ public class HelloApplication extends Application {
         golge.setOffsetY(5);
         golge.setColor(Color.color(0, 0, 0, 0.15));
 
-        // ==========================================
-        // 1. ÜST PANEL
-        // ==========================================
+
         VBox ustPanel = new VBox(15);
         ustPanel.setPadding(new Insets(20));
         ustPanel.setStyle("-fx-background-color: white; -fx-background-radius: 0 0 20 20;");
@@ -113,50 +110,47 @@ public class HelloApplication extends Application {
         kontrolKutusu.getChildren().addAll(tPlaka, cmbTip, btnEkle, btnIlerle);
         ustPanel.getChildren().addAll(baslik, kontrolKutusu);
 
-        // ==========================================
-        // 2. ORTA PANEL (OYUN ALANI - TYCOON)
-        // ==========================================
+
         oyunAlani.setPrefSize(1250, 650);
         oyunAlani.setStyle("-fx-background-color: #1e90ff;");
 
-        // Okyanus
+
         if (imgOkyanus != null) {
             ImageView viewOkyanus = new ImageView(imgOkyanus);
             viewOkyanus.setFitWidth(1350); viewOkyanus.setFitHeight(750);
             oyunAlani.getChildren().add(viewOkyanus);
         }
 
-        // 🔥 GÜNCELLEME: Rıhtım Yukarı Çekildi 🔥
+
         if (imgRihtim != null) {
             ImageView viewRihtim = new ImageView(imgRihtim);
             viewRihtim.setFitWidth(900);
             viewRihtim.setPreserveRatio(true);
             viewRihtim.setLayoutX(20);
-            viewRihtim.setLayoutY(0); // Eski değer: 60 (60px yukarı çekildi)
+            viewRihtim.setLayoutY(0);
             oyunAlani.getChildren().add(viewRihtim);
         }
 
-        // 🔥 GÜNCELLEME: Yollar Yukarı Çekildi 🔥
         Rotate sabitAci = new Rotate(27, 0, 0);
 
         uiYol1.setLayoutX(350);
-        uiYol1.setLayoutY(230); // Eski değer: 290
+        uiYol1.setLayoutY(230);
         uiYol1.getTransforms().add(sabitAci);
 
         uiYol2.setLayoutX(300);
-        uiYol2.setLayoutY(300); // Eski değer: 360
+        uiYol2.setLayoutY(300);
         uiYol2.getTransforms().add(sabitAci);
 
-        // 🔥 GÜNCELLEME: Feribot Yukarı Çekildi 🔥
+
         gemiKonteyner.setLayoutX(570);
-        gemiKonteyner.setLayoutY(150); // Eski değer: 260
+        gemiKonteyner.setLayoutY(150);
         if (imgFerry != null) {
             ImageView viewFeribot = new ImageView(imgFerry);
             viewFeribot.setFitWidth(450); viewFeribot.setPreserveRatio(true);
             gemiKonteyner.getChildren().add(viewFeribot);
         }
 
-        // Görünmez İç Garajlar
+
         paneUstKatGaraj.setOpacity(0); paneAltKatGaraj.setOpacity(0);
         Rotate gemiAcisi = new Rotate(-16, 0, 0);
         paneUstKatGaraj.setLayoutX(90); paneUstKatGaraj.setLayoutY(175);
@@ -164,7 +158,6 @@ public class HelloApplication extends Application {
         paneAltKatGaraj.setLayoutX(70); paneAltKatGaraj.setLayoutY(235);
         paneAltKatGaraj.getTransforms().add(gemiAcisi);
 
-        // Kapasite Paneli
         VBox infoPanel = new VBox(5);
         infoPanel.setLayoutX(170); infoPanel.setLayoutY(-30);
         infoPanel.setStyle("-fx-background-color: rgba(255,255,255,0.9); -fx-background-radius: 8; -fx-padding: 8;");
@@ -178,9 +171,7 @@ public class HelloApplication extends Application {
         animasyonPaneli.setMouseTransparent(true);
         oyunAlani.getChildren().addAll(uiYol1, uiYol2, gemiKonteyner, animasyonPaneli);
 
-        // ==========================================
-        // 3. ALT PANEL (SİSTEM LOGLARI)
-        // ==========================================
+
         VBox altPanel = new VBox(8);
         altPanel.setPadding(new Insets(15));
         txtSistemLog.setPrefHeight(180);
@@ -205,7 +196,7 @@ public class HelloApplication extends Application {
             }
 
             int tip = cmbTip.getValue().startsWith("1") ? 1 : 2;
-            simulasyonSaati = saatIlerlet(simulasyonSaati, 5);
+            simulasyonSaati = saatIlerlet(simulasyonSaati, 10);
 
             Arac a = new Arac(plaka, simulasyonSaati, tip);
             a.aracNo = globalAracNo++;
@@ -220,7 +211,7 @@ public class HelloApplication extends Application {
             else { yol2.ekle(a); uiYol2.getChildren().add(0, gorsel); }
             siraYol1de = !siraYol1de;
 
-            yollariGorselGuncelle(); // 🔥 OTOGAR SİSTEMİNİ ÇALIŞTIR 🔥
+            yollariGorselGuncelle();
 
             logYaz("✅ GİŞE: " + plaka + " limana giriş yaptı. (Saat: " + String.format(Locale.US, "%.2f", simulasyonSaati) + ")");
             tPlaka.clear();
@@ -232,11 +223,11 @@ public class HelloApplication extends Application {
         gemiBilgisiniGuncelle();
 
         stage.setScene(new Scene(root, 1250, 900));
-        stage.setTitle("Liman & Feribot Tycoon - Kusursuz Final");
+        stage.setTitle("Liman & Feribot ");
         stage.show();
     }
 
-    // 🔥 YENİ EKLENEN: OTOGAR SİSTEMİ (MAX 4 ARAÇ GÖSTERİMİ) 🔥
+
     private void yollariGorselGuncelle() {
         guncelleYolPaneli(uiYol1);
         guncelleYolPaneli(uiYol2);
@@ -352,7 +343,7 @@ public class HelloApplication extends Application {
 
         siraYol1deYukle = !siraYol1deYukle;
 
-        yollariGorselGuncelle(); // 🔥 OTOGAR SİSTEMİNİ ÇALIŞTIR (Araç gidince arkadaki görünür olur) 🔥
+        yollariGorselGuncelle();
 
         if (a != null && startLocal != null) {
             gorselAnimasyonOynat(a, f, startLocal);
@@ -369,12 +360,12 @@ public class HelloApplication extends Application {
         Point2D endLocal = oyunAlani.sceneToLocal(hedefGaraj.localToScene(0, 0));
 
         TranslateTransition tt = new TranslateTransition(Duration.seconds(0.7), animNode);
-        // Araçlar gemi kapağından içeri kayarak girer
+
         tt.setToX(endLocal.getX() - startLocal.getX() + 60);
         tt.setToY(endLocal.getY() - startLocal.getY() + 10);
 
         tt.setOnFinished(e -> {
-            animasyonPaneli.getChildren().remove(animNode); // Geminin içinde kaybolur
+            animasyonPaneli.getChildren().remove(animNode);
             araciFeribotaYerlestir(a, f);
         });
         tt.play();
@@ -394,13 +385,16 @@ public class HelloApplication extends Application {
 
         if (yuklendi) {
             a.seferNo = f.getSeferNo();
-            logYaz(">> " + a.aracPlaka + " gemiye yüklendi.");
+            logYaz(">> " + a.aracPlaka + " gemiye yüklendi. (Giriş Saati: "
+                    + String.format(Locale.US, "%.2f", a.giseGirisSaati) + ")");
             f.kalkisDurumuGuncelle(a.giseGirisSaati);
             kapasiteBarlariniGuncelle(f);
         } else {
             logYaz(">> ⚠️ " + a.aracPlaka + " bindiği kat dolu olduğu için kuyruğa geri döndü.");
+
+            a.giseGirisSaati = saatIlerlet(simulasyonSaati, 5);
+
             Node geriGidenArac = aracGorseliOlustur(a);
-            // Geri dönen araç tekrar kuyruğun en sonuna (gemiye en yakın yere) eklenir
             if (siraYol1deYukle) { yol1.ekle(a); uiYol1.getChildren().add(geriGidenArac); }
             else { yol2.ekle(a); uiYol2.getChildren().add(geriGidenArac); }
             yollariGorselGuncelle();
@@ -414,14 +408,14 @@ public class HelloApplication extends Application {
     private void feribotKalkisAnimasyonuBaslat(Feribot f) {
         logYaz("\n🚢 === FERİBOT KALKIŞ YAPIYOR === 🚢");
         TranslateTransition kalkis = new TranslateTransition(Duration.seconds(4), gemiKonteyner);
-        kalkis.setByX(900); // Gemi sağa doğru gidip ekrandan çıkar
+        kalkis.setByX(900);
         kalkis.setOnFinished(e -> {
             feribotRaporYaz(f);
             siradakiFeribotIndex++;
             gemiBilgisiniGuncelle();
             paneAltKatGaraj.getChildren().clear();
             paneUstKatGaraj.getChildren().clear();
-            gemiKonteyner.setTranslateX(0); // Yeni gemi rampa ucuna gelir
+            gemiKonteyner.setTranslateX(0);
             barAltKat.setProgress(0); barUstKat.setProgress(0);
             lblAltOran.setText("%0"); lblUstOran.setText("%0");
         });
@@ -442,7 +436,7 @@ public class HelloApplication extends Application {
     private void gemiBilgisiniGuncelle() {
         if (siradakiFeribotIndex < feribotSayisi) {
             Feribot f = feribotlar[siradakiFeribotIndex];
-            lblFeribotBilgi.setText("Sıradaki Feribot: " + f.getSeferNo() + " (Planlanan Kalkış: " + f.getFeribotRihtimKalkisSaati() + ")");
+            lblFeribotBilgi.setText(" Feribot: " + f.getSeferNo() + " (Planlanan Kalkış: " + f.getFeribotRihtimKalkisSaati() + ")");
         }
     }
 
@@ -567,7 +561,7 @@ public class HelloApplication extends Application {
                 siraYol1de = !siraYol1de;
             }
 
-            yollariGorselGuncelle(); // 🔥 OTOGAR SİSTEMİNİ ÇALIŞTIR 🔥
+            yollariGorselGuncelle();
 
             lblDurum.setText("🟢 Veriler başarıyla yüklendi ve saatlerine göre sıralandı.");
         } catch (Exception e) {

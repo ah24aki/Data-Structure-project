@@ -23,8 +23,6 @@ public class Feribot {
         this.feribotRihtimGirisSaati = girisSaati;
         this.feribotRihtimKalkisSaati = kalkisSaati;
         this.feribotKalkisaHazirMi = false;
-
-
         this.altKat = new Yigin(5);
         this.ustKat = new Yigin(5);
     }
