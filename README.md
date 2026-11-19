@@ -6,7 +6,7 @@ A JavaFX simulation of vehicles waiting at a port and being loaded onto ferries.
 
 > Team project (2 people) for the Data Structures course at Bingöl University.
 
-<!-- Add a screenshot or GIF of the simulation here: ![Simulation](docs/screenshot.png) -->
+![Port & Ferry simulation: vehicles waiting on two loading roads, the ferry deck fill levels and the loading log](docs/screenshot.jpg)
 
 ## How the simulation works
 
